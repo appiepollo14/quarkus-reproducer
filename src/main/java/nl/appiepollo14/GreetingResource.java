@@ -1,5 +1,6 @@
 package nl.appiepollo14;
 
+import io.opentelemetry.context.Context;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
 import io.smallrye.common.annotation.NonBlocking;
@@ -14,12 +15,10 @@ public class GreetingResource {
     @Inject
     EventBus bus;
 
-    @Inject
-    ProcessingService processingService;
-
     @GET
     @NonBlocking
     public String start() {
+        System.out.println("OTEL context in REST API" + Context.current());
         bus.send("topic", "dummyBody");
         return "Hello from Quarkus REST";
     }
@@ -27,6 +26,7 @@ public class GreetingResource {
     @Blocking
     @ConsumeEvent("topic")
     public void processing(String body) {
-        processingService.start();
+        System.out.println("OTEL context in eventbus: " + Context.current());
+        System.out.println("Processing");
     }
 }
