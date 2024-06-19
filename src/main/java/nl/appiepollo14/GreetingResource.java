@@ -4,6 +4,7 @@ import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
 import io.smallrye.common.annotation.NonBlocking;
@@ -41,11 +42,13 @@ public class GreetingResource {
                 .setSpanKind(SpanKind.INTERNAL)
                 .startSpan();
 
-        // traced work
-        System.out.println("Processing");
-        blabla.waiter(r.c());
-
-        span.end();
-        System.out.println("Finished");
+        try (Scope scope = span.makeCurrent()) {
+            // traced work
+            System.out.println("Processing");
+            blabla.waiter();
+        } finally {
+            span.end();
+            System.out.println("Finished");
+        }
     }
 }
