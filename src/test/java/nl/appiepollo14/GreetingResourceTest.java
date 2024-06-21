@@ -1,12 +1,18 @@
 package nl.appiepollo14;
 
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static io.restassured.RestAssured.when;
+import static org.hamcrest.Matchers.is;
 
 @QuarkusTest
 class GreetingResourceTest {
 
-    given
+    @Test
+    public void testProcessing() {
+        when().get("/hello").then().body(is(
+                "Hello from Quarkus REST"));
+    }
 
 }
