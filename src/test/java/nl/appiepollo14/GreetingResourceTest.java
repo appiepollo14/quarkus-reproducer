@@ -12,7 +12,7 @@ class GreetingResourceTest {
     @Test
     public void testProcessing() {
         when().get("/hello").then().body(is(
-                "Hello from Quarkus REST"));
+                "23F218$$12%%3##HJ"));
     }
 
 }
