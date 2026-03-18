@@ -43,10 +43,6 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.jgit</groupId>
-            <artifactId>quarkus-jgit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.jgit</groupId>
             <artifactId>quarkus-jgit-sshd</artifactId>
         </dependency>
         <dependency>
